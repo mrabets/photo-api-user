@@ -3,7 +3,9 @@ import React, {Component} from 'react'
 export default function Photo(props) {
 	return (
 		<div>
-			{props.photo.name}
+			<p>{props.photo.name}</p>
+			{/*<p>{props.photo.image}</p>*/}
+			<img src={`http://localhost:3001/${props.photo.image}`} />
 		</div>
 	)
 }
