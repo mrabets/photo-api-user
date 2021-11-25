@@ -3,3 +3,11 @@
 * {
   font-family: 'M PLUS 1 Code', sans-serif;
 }
+
+#photo_list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}

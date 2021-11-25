@@ -42,11 +42,11 @@ class PhotoList extends Component {
 		return (
 			<div>
 				<PhotoForm api_url={api_url} updatePhotoList={this.updatePhotoList} />
-				<ul id="photo_list">
+				<div id="photo_list">
 		            {this.state.photos.map((photo) => (
 		            	<Photo key={photo.id} photo={photo} />
 		            ))}
-		        </ul>   
+		        </div>   
 			</div>
 		)
 	}
