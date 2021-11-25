@@ -12,14 +12,30 @@ class PhotoList extends Component {
 		}
 	}
 
+	componentDidMount() {
+		this.getNames();
+	}
+
+	getNames() {
+		fetch(api_url) 
+		.then(response => response.json())
+		.then(response_photos => {
+			this.setState({
+				photos: response_photos
+			})
+		});
+	}
+
 	render() {
+		console.log(this.state.photos)
+
 		return (
 			<div>
 				<PhotoForm />
-				<ul>
-		            <li>Photo#1</li>
-		            <li>Photo#2</li>
-		            <li>Photo#3</li>
+				<ul id="photo_list">
+		            {this.state.photos.map((photo) => (
+		            	<li key={photo.id}>{photo.name}</li>
+		            ))}
 		        </ul>   
 			</div>
 		)
