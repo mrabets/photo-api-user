@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PhotoForm from './PhotoForm'
+import Photo from './Photo'
 
 const api_url = `http://127.0.0.1:3001/api/v1/photos`
 
@@ -10,6 +11,7 @@ class PhotoList extends Component {
 		this.state = {
 			photos: []
 		}
+		this.updatePhotoList = this.updatePhotoList.bind(this);
 	}
 
 	componentDidMount() {
@@ -21,9 +23,17 @@ class PhotoList extends Component {
 		.then(response => response.json())
 		.then(response_photos => {
 			this.setState({
-				photos: response_photos
+				photos: response_photos.reverse()
 			})
 		});
+	}
+
+	updatePhotoList(photo) {
+		let _photos = this.state.photos
+		_photos.unshift(photo)
+		this.setState({
+			photos: _photos
+		})
 	}
 
 	render() {
@@ -31,10 +41,10 @@ class PhotoList extends Component {
 
 		return (
 			<div>
-				<PhotoForm />
+				<PhotoForm api_url={api_url} updatePhotoList={this.updatePhotoList} />
 				<ul id="photo_list">
 		            {this.state.photos.map((photo) => (
-		            	<li key={photo.id}>{photo.name}</li>
+		            	<Photo key={photo.id} photo={photo} />
 		            ))}
 		        </ul>   
 			</div>
