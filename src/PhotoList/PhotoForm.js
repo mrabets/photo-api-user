@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { DirectUpload } from 'activestorage';
+import { Button } from 'react-bootstrap';
 
 class PhotoForm extends Component {
 	constructor(props) {
@@ -73,30 +74,34 @@ class PhotoForm extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="Photo-form">
 				<form
 				onSubmit={this.handleSubmit}
 				id="photo_form"
 				autoComplete="off">
-					<label><br />
-						Name: <br />
-				    	<input 
-				    	id="name_input"
-				    	type="text" 
-				    	name="name"
-				    	onChange={this.handleNameChange }/>
-					</label>
+					
+						<label className="form-label"><br />
+							Name
+					    	<input 
+					    	id="name_input"
+					    	className="form-control"
+					    	type="text" 
+					    	name="name"
+					    	onChange={this.handleNameChange }/>
+						</label>
+					
 
-					<label><br /><br />
-						Image upload: <br />
+					<label className="form-label">
+						Image upload <br />
 				    	<input 
 				    	id="image_input"
+				    	className="form-control"
 				    	type="file" 
 				    	name="image"
 				    	onChange={this.handleNameChange }/>
 					</label><br /><br />
 
-				 	<input type="submit" value="Submit" />
+				 	<input type="submit" value="Submit" className="btn btn-primary" />
 				</form>
 			</div>
 		)
