@@ -43,7 +43,7 @@ class PhotoList extends Component {
 			<div>
 				<div>
 					<PhotoForm api_url={api_url} updatePhotoList={this.updatePhotoList} />
-					<br /><hr /><br />
+					<br /><br />
 				</div>
 				<div className="Photo-list">
 		            {this.state.photos.map((photo) => (

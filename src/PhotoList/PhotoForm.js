@@ -74,21 +74,21 @@ class PhotoForm extends Component {
 
 	render() {
 		return (
-			<div className="Photo-form">
+			<div className="Own-form">
 				<form
 				onSubmit={this.handleSubmit}
 				id="photo_form"
 				autoComplete="off">
 					
-						<label className="form-label"><br />
-							Name
-					    	<input 
-					    	id="name_input"
-					    	className="form-control"
-					    	type="text" 
-					    	name="name"
-					    	onChange={this.handleNameChange }/>
-						</label>
+					<label className="form-label"><br />
+						Name
+				    	<input 
+				    	id="name_input"
+				    	className="form-control"
+				    	type="text" 
+				    	name="name"
+				    	onChange={this.handleNameChange }/>
+					</label>
 					
 
 					<label className="form-label">
