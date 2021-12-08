@@ -25,14 +25,14 @@ class SignIn extends Component {
         user: {
           email,
           password
-        }
+        },
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
       })
       .then(response => {
-        console.log(response.data);
-        console.log(response.status);
-        console.log(response.statusText);
-        console.log(response.headers);
-        console.log(response.config);
+        localStorage.setItem('token', response.data.token);
       })
       .catch(error => console.log(error))
     }
