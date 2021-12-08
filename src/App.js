@@ -1,27 +1,25 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import axios from 'axios'
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import PhotoList from './PhotoList/PhotoList'
-import SignIn from './Users/SignIn'
-import SignUp from './Users/SignUp'
-import Navbar from './Navbar/Navbar'
 
-class App extends Component {
+import SignIn from './Pages/SignIn';
+import SignUp from './Pages/SignUp';
+import Homepage from './Pages/Homepage';
+import NotFound from './Pages/NotFound';
+import Layout from './Layout/Layout';
 
-  render() {
-    return (
-      <div className="App">  
 
-        <Navbar />
-        <Routes>
-          <Route exact path="/" element={<PhotoList/>} />
-          <Route exact path="/sign_in" element={<SignIn/>} />
-          <Route exact path="/sign_up" element={<SignUp/>} />
-        </Routes>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <div className="App">
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Homepage />} />
+        <Route path="sign_in" element={<SignIn />} />
+        <Route path="sign_up" element={<SignUp />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+  </div>
+);
 
 export default App;
