@@ -25,3 +25,9 @@
   
   justify-items: center;
 }
+
+.Error-label {
+  color:darkred;
+  margin-top: 10px;
+  margin-bottom: 2rem;
+}
