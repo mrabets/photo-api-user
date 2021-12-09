@@ -4,7 +4,7 @@ export function useAuth() {
   const {id, email, token} = useSelector(state => state.user)
 
   return {
-    isAuth: !!email,
+    isAuth: !!token,
     id,
     email,
     token
