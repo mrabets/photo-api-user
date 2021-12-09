@@ -2,8 +2,8 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 
-import SignIn from './Pages/SignIn';
-import SignUp from './Pages/SignUp';
+import {SignIn} from './Pages/SignIn';
+import {SignUp} from './Pages/SignUp';
 import Homepage from './Pages/Homepage';
 import NotFound from './Pages/NotFound';
 import Layout from './Layout/Layout';
