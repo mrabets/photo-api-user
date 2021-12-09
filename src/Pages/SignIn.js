@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../store/userSlice'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
 export function SignIn() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,9 +26,14 @@ export function SignIn() {
           'Content-Type': 'application/json',
         },
       })
-      .then(response => {
-        console.log(response.data)
-        localStorage.setItem('token', response.data.token);
+      .then(response => response.data)
+      .then(data => {
+        console.log(data)
+        dispatch(setUser({
+          id: data.user.id,
+          email: data.user.email,
+          token: data.token
+        }))
         navigate('/', {replace: true})
       })
       .catch(error => console.log(error))

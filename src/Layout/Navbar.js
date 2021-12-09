@@ -1,16 +1,17 @@
-import Button from '@restart/ui/esm/Button';
-import React, {useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { useAuth } from '../hooks/use-auth';
+import { useDispatch } from 'react-redux';
+import { removeUser } from '../store/userSlice'
 
 const Navbar = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const {isAuth} = useAuth()
 
   const onLogOut = () => {
-    localStorage.removeItem('token')
-    navigate('/', {replace: true})
+    dispatch(removeUser())
+    navigate('/', {remote: true})
   }
 
   return (
@@ -21,29 +22,25 @@ const Navbar = () => {
           PHOTO SITE
         </Link>
 
-        { token ? ( 
+        { isAuth ? ( 
         
-          <div className="nav-btn d-flex">
-
+          <div className="nav-btn d-flex">          
             <button onClick={onLogOut} className="btn btn-outline-primary me-2">
               Log Out
             </button>
-
           </div>
     
          
           ) : (
 
             <div className="nav-btn d-flex">
-
               <Link to="/sign_up" className="btn btn-outline-primary me-2">
                 Sign Up
               </Link>
-    
+
               <Link to="/sign_in" className="btn btn-primary">
                 Sign In
-            </Link>
-
+              </Link>
             </div>
           )
         }
