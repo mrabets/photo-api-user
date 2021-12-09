@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 export function SignIn() {
+  const navigate = useNavigate()
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -23,6 +26,7 @@ export function SignIn() {
       .then(response => {
         console.log(response.data)
         localStorage.setItem('token', response.data.token);
+        navigate('/', {replace: true})
       })
       .catch(error => console.log(error))
   } 

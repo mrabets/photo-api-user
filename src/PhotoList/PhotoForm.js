@@ -18,7 +18,7 @@ class PhotoForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.formSubmit(event.target);
+    //this.formSubmit(event.target);
   }
 
   formSubmit(formData) {

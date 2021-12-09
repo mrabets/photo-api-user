@@ -4,9 +4,9 @@ import './App.css';
 
 import {SignIn} from './Pages/SignIn';
 import {SignUp} from './Pages/SignUp';
-import Homepage from './Pages/Homepage';
-import NotFound from './Pages/NotFound';
-import Layout from './Layout/Layout';
+import {Homepage} from './Pages/Homepage';
+import {NotFound} from './Pages/NotFound';
+import {Layout} from './Layout/Layout';
 
 
 const App = () => (
