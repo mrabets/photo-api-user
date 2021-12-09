@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../store/userSlice'
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
 
 export function SignIn() {
   const navigate = useNavigate()
@@ -21,14 +20,9 @@ export function SignIn() {
           email,
           password
         },
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
       })
       .then(response => response.data)
       .then(data => {
-        console.log(data)
         dispatch(setUser({
           id: data.user.id,
           email: data.user.email,

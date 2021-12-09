@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../store/userSlice'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
 export function SignUp() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [password_confirmation, setPasswordConfirmation] = useState('') 
@@ -16,9 +21,17 @@ export function SignUp() {
           email,
           password,
           password_confirmation
-        }
+        },
       })
-      .then(response => console.log(response))
+      .then(response => response.data)
+      .then(data => {
+        dispatch(setUser({
+          id: data.user.id,
+          email: data.user.email,
+          token: data.token
+        }))
+        navigate('/', {replace: true})
+      })
       .catch(error => console.log(error))
   }
 
