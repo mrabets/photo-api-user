@@ -24,7 +24,7 @@ export function PhotoList() {
       })
       .then(response => response.data)
       .then(data => {console.log(data); setPhotos(data.reverse())}) 
-      .catch(error => console.log(error.response.data.error))
+      .catch(error => console.log(error))
   }
 
   function updatePhotoList(photo) {

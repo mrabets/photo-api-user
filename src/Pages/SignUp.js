@@ -19,6 +19,7 @@ export function SignUp() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [password_confirmation, setPasswordConfirmation] = useState('') 
+  const [api_errors, setApiErrors] = useState('');
 
   const onSubmit = (event) => {
     axios
@@ -38,12 +39,16 @@ export function SignUp() {
         }))
         navigate('/', {replace: true})
       })
-      .catch(error => console.log(error.response.data.error))
+      .catch(error => setApiErrors(error.response.data.error))
   }
 
   return (
     <div className="Own-form">
       <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="Error-label">
+          {api_errors}
+        </div>
+
         <div className="mb-3">
           <label className="form-label">Email</label>
           <input
