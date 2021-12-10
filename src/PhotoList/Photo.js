@@ -1,4 +1,4 @@
-import React from 'react';
+import {Like} from './Like'
 
 export function Photo(props) {
   return (
@@ -12,7 +12,10 @@ export function Photo(props) {
 
       <div className="card-body">
         <p className="card-text">{props.photo.name}</p>
+        <Like photo_id={props.photo.id}/>
       </div>
+
+      
     </div>
   );
 }

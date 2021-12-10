@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {PhotoForm} from './PhotoForm';
 import {Photo} from './Photo';
 import { useAuth } from '../hooks/use-auth';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { DirectUpload } from 'activestorage';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -34,7 +34,7 @@ export function PhotoForm(props) {
         console.log(response.data)
         props.updatePhotoList(response.data)
       })
-      .catch(error => console.log(error))
+      .catch(error => console.log(error.response.message))
   }
 
   return (
