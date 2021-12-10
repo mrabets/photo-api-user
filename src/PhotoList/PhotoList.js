@@ -3,10 +3,13 @@ import {PhotoForm} from './PhotoForm';
 import {Photo} from './Photo';
 import { useAuth } from '../hooks/use-auth';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export function PhotoList() {
+  const navigate = useNavigate()
+
   const [photos, setPhotos] = useState([]);
-  const {isAuth} = useAuth()
+  const {isAuth} = useAuth() 
 
   useEffect(() => {
     getNames()
@@ -20,15 +23,16 @@ export function PhotoList() {
         }
       })
       .then(response => response.data)
-      .then(data => {console.log(data); setPhotos(data)}) 
+      .then(data => {console.log(data); setPhotos(data.reverse())}) 
       .catch(error => console.log(error.response.data.error))
   }
 
   function updatePhotoList(photo) {
-    const _photos = photos;
+    let _photos = photos;
     _photos.unshift(photo);
-
     setPhotos(_photos);
+
+    navigate('/', {replace: true})
   }
 
   return (
@@ -50,7 +54,6 @@ export function PhotoList() {
           <h2 className="Message">Please, log in!</h2>
         )
       }
-     
       
     </div>
   );

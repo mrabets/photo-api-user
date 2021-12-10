@@ -3,7 +3,7 @@ import { DirectUpload } from 'activestorage';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
-export function PhotoForm() {
+export function PhotoForm(props) {
   const { 
     register, 
     handleSubmit,
@@ -30,8 +30,11 @@ export function PhotoForm() {
       .post(process.env.REACT_APP_API_URL + '/api/v1/photos', formData,  
         { headers: headers }
       )
-      .then(response => console.log(response.data))
-      .catch(error => console.log(error.response.data.error))
+      .then(response => {
+        console.log(response.data)
+        props.updatePhotoList(response.data)
+      })
+      .catch(error => console.log(error))
   }
 
   return (
