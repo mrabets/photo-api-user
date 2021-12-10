@@ -1,5 +1,5 @@
 import React from 'react';
-import PhotoList from '../PhotoList/PhotoList';
+import {PhotoList} from '../PhotoList/PhotoList';
 
 export function Homepage() {
   return (

@@ -1,57 +1,57 @@
-import React, { Component } from 'react';
-import PhotoForm from './PhotoForm';
-import Photo from './Photo';
+import React, { useState, useEffect } from 'react';
+import {PhotoForm} from './PhotoForm';
+import {Photo} from './Photo';
+import { useAuth } from '../hooks/use-auth';
+import axios from 'axios';
 
-const api_url = 'http://127.0.0.1:3001/api/v1/photos';
+export function PhotoList() {
+  const [photos, setPhotos] = useState([]);
+  const {isAuth} = useAuth()
 
-class PhotoList extends Component {
-  constructor(props) {
-    super(props);
+  useEffect(() => {
+    getNames()
+  }, []);
 
-    this.state = {
-      photos: [],
-    };
-    this.updatePhotoList = this.updatePhotoList.bind(this);
+  function getNames() {
+    axios
+      .get(process.env.REACT_APP_API_URL + '/api/v1/photos', {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+      })
+      .then(response => response.data)
+      .then(data => {console.log(data); setPhotos(data)}) 
+      .catch(error => console.log(error.response.data.error))
   }
 
-  componentDidMount() {
-    this.getNames();
-  }
-
-  getNames() {
-    // fetch(api_url)
-    // .then(response => response.json())
-    // .then(response_photos => {
-    // 	this.setState({
-    // 		photos: response_photos.reverse()
-    // 	})
-    // });
-  }
-
-  updatePhotoList(photo) {
-    const _photos = this.state.photos;
+  function updatePhotoList(photo) {
+    const _photos = photos;
     _photos.unshift(photo);
-    this.setState({
-      photos: _photos,
-    });
+
+    setPhotos(_photos);
   }
 
-  render() {
-    return (
-      <div>
-        <div>
-          <PhotoForm api_url={api_url} updatePhotoList={this.updatePhotoList} />
-          <br />
-          <br />
-        </div>
-        <div className="Photo-list">
-          {this.state.photos.map((photo) => (
-            <Photo key={photo.id} photo={photo} />
-          ))}
-        </div>
-      </div>
-    );
-  }
+  return (
+    <div>
+      {
+        isAuth ? (
+          <>
+          <div>
+            <PhotoForm updatePhotoList={updatePhotoList} />
+          </div>
+
+          <div className="Photo-list">
+            {photos.map((photo) => (
+              <Photo key={photo.id} photo={photo} />
+            ))}
+          </div>
+          </>
+        ) : (
+          <h2 className="Message">Please, log in!</h2>
+        )
+      }
+     
+      
+    </div>
+  );
 }
-
-export default PhotoList;

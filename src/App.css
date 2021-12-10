@@ -17,6 +17,7 @@
 }
 
 .Photo-list {
+  margin-top: 4rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
@@ -30,4 +31,12 @@
   color:darkred;
   margin-top: 10px;
   margin-bottom: 2rem;
+}
+
+.card-text {
+  text-align: center;
+}
+
+.Message {
+  text-align: center;
 }

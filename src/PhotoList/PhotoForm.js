@@ -1,117 +1,74 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { DirectUpload } from 'activestorage';
-import { Button } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
-class PhotoForm extends Component {
-  constructor(props) {
-    super(props);
+export function PhotoForm() {
+  const { 
+    register, 
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: "onBlur"
+  });
 
-    this.state = {
-      api_url: props.api_url,
-      name: '',
-      image: {},
-    };
+  const [name, setName] = useState('');
+  const [image, setImage] = useState(null);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
-  }
+  const onSubmit = (event) => {
+    const formData = new FormData()
 
-  handleSubmit(event) {
-    event.preventDefault();
-    //this.formSubmit(event.target);
-  }
+    formData.append('name', name)
+    formData.append('image', image)
 
-  formSubmit(formData) {
-    const data = new FormData(formData);
-
-    fetch(this.state.api_url, {
-      method: 'POST',
-      mode: 'cors',
-      body: data,
-    })
-      .then((response) => response.json())
-    // .then(data => console.log(data))
-      .then((data) => this.uploadFile(this.state.image, data));
-    // .then(response => this.props.updatePhotoList(response))
-  }
-
-  uploadFile = (file, data) => {
-    const upload = new DirectUpload(file, 'http://127.0.0.1:3001/rails/active_storage/direct_uploads');
-
-    upload.create((error, blob) => {
-      if (error) {
-        console.log(error);
-      } else {
-        fetch(`${this.state.api_url}/${data.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          mode: 'cors',
-          body: JSON.stringify({ image: blob.signed_in }),
-        })
-          .then((response) => response.json())
-          .then((data) => this.props.updatePhotoList(data));
-      }
-    });
-  };
-
-  handleNameChange(event) {
-    if (event.target.name === 'image') {
-      console.log(event.target.files[0]);
-      this.setState({
-        [event.target.name]: event.target.files[0],
-      });
-    } else {
-      console.log(event.target.value);
-      this.setState({
-        [event.target.name]: event.target.value,
-      });
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
     }
+
+    axios
+      .post(process.env.REACT_APP_API_URL + '/api/v1/photos', formData,  
+        { headers: headers }
+      )
+      .then(response => console.log(response.data))
+      .catch(error => console.log(error.response.data.error))
   }
 
-  render() {
-    return (
-      <div className="Own-form">
-        <form
-          onSubmit={this.handleSubmit}
-          id="photo_form"
-          autoComplete="off"
-        >
+  return (
+    <div className="Own-form">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label className="form-label">
+          Name
+          <input
+            {...register("name", {
+              required: true,
+            })}
+            id="name_input"
+            className="form-control"
+            type="text"
+            name="name"
+            onChange={e => setName(e.target.value)}
+          />
+        </label>
+        <div className="Error-label">
+            {errors?.name?.type === "required" && <p>This field is required</p>}
+        </div>
 
-          <label className="form-label">
-            <br />
-            Name
-            <input
-              id="name_input"
-              className="form-control"
-              type="text"
-              name="name"
-              onChange={this.handleNameChange}
-            />
-          </label>
+        <label className="form-label">
+          <input
+            {...register("image", {
+              required: true,
+            })}
+            id="image_input"
+            className="form-control"
+            type="file"
+            name="image"
+            onChange={e => setImage(e.target.files[0])}
+          /><br />
+        </label>
 
-          <label className="form-label">
-            Image upload
-            {' '}
-            <br />
-            <input
-              id="image_input"
-              className="form-control"
-              type="file"
-              name="image"
-              onChange={this.handleNameChange}
-            />
-          </label>
-          <br />
-          <br />
-
-          <input type="submit" value="Submit" className="btn btn-primary" />
-        </form>
-      </div>
-    );
-  }
+        <input type="submit" value="Submit" className="btn btn-primary" />
+      </form>
+    </div>
+  );
 }
-
-export default PhotoForm;

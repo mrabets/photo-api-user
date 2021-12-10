@@ -10,7 +10,9 @@ export function SignIn() {
     register, 
     handleSubmit,
     formState: { errors }
-  } = useForm();
+  } = useForm({
+    mode: "onBlur"
+  });
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
