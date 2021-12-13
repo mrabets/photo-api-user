@@ -5,9 +5,11 @@ import axios from 'axios';
 
 export function Like(props) {
   const [liked, setLiked] = useState(null)
+  const [like_count, setLikeCount] = useState(0)
 
   useEffect(() => {
     getLike()
+    getLikeCount()
   }, []);
 
   function getLike() {
@@ -20,6 +22,19 @@ export function Like(props) {
       })
       .then(response => response.data)
       .then(data => {setLiked(data.status)}) 
+      .catch(error => console.log(error.response))
+  }
+
+  function getLikeCount() {
+    axios
+      .get(process.env.REACT_APP_API_URL + `/api/v1/photos/${props.photo_id}/like_count`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+      })
+      .then(response => response.data)
+      .then(data => {setLikeCount(data.like_count)}) 
       .catch(error => console.log(error.response))
   }
 
@@ -40,7 +55,8 @@ export function Like(props) {
       { headers: headers }
     )
     .then(response => {
-      setLiked(true)
+      setLiked(true);
+      setLikeCount(like_count + 1)
     })
     .catch(error => console.log(error.response.data.error))
   }
@@ -52,6 +68,7 @@ export function Like(props) {
     )
     .then(response => {
       setLiked(false)
+      setLikeCount(like_count - 1)
     })
     .catch(error => console.log(error.response.data.error))
   }
@@ -66,7 +83,7 @@ export function Like(props) {
         { liked ? <RiThumbUpFill /> : <RiThumbUpLine />}
         
       </button>
-      
+      {like_count}
     </>
   )
 }

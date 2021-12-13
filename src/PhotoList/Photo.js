@@ -14,8 +14,6 @@ export function Photo(props) {
         <p className="card-text">{props.photo.name}</p>
         <Like photo_id={props.photo.id}/>
       </div>
-
-      
     </div>
   );
 }

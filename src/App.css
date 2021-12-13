@@ -18,11 +18,12 @@
 
 .Photo-list {
   margin-top: 4rem;
+  margin-bottom: 4rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
   grid-column-gap: 0px;
-  grid-row-gap: 10px;
+  grid-row-gap: 4rem;
   
   justify-items: center;
 }
