@@ -12,10 +12,10 @@ export function PhotoList() {
   const {isAuth} = useAuth() 
 
   useEffect(() => {
-    getNames()
+    getPhotos()
   }, []);
 
-  function getNames() {
+  function getPhotos() {
     axios
       .get(process.env.REACT_APP_API_URL + '/api/v1/photos', {
         headers: {

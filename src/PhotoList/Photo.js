@@ -6,8 +6,7 @@ export function Photo(props) {
       <img
         className="card-img-top"
         src={`http://localhost:3000/${props.photo.image}`}
-        width="200px"
-        height="200px"
+        
       />
 
       <div className="card-body">

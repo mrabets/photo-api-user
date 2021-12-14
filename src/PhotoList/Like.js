@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 export function Like(props) {
-  const [liked, setLiked] = useState(null)
+  const [liked, setLiked] = useState(false)
   const [like_count, setLikeCount] = useState(0)
 
   useEffect(() => {
@@ -73,14 +73,14 @@ export function Like(props) {
     .catch(error => console.log(error.response.data.error))
   }
 
-  return (
+  return ( 
     <>
       <button
         onClick={onClick}
-        className='like-button'
-        
+        className='like-button'    
       >
-        { liked ? <RiThumbUpFill /> : <RiThumbUpLine />}
+
+      { liked ? <RiThumbUpFill /> : <RiThumbUpLine />}
         
       </button>
       {like_count}

@@ -17,15 +17,20 @@
 }
 
 .Photo-list {
-  margin-top: 4rem;
-  margin-bottom: 4rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-
   grid-column-gap: 0px;
   grid-row-gap: 4rem;
-  
+  margin-top: 4rem;
+  margin-bottom: 4rem;
   justify-items: center;
+}
+
+.Photo-list > div > img {
+  min-width: 190px;
+  max-width: 200px;
+  min-height: 190px;
+  max-height: 200px;
 }
 
 .Error-label {
