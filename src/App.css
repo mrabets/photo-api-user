@@ -26,7 +26,7 @@
   justify-items: center;
 }
 
-.Photo-list > div > img {
+.card-img-top {
   min-width: 190px;
   max-width: 200px;
   min-height: 190px;
@@ -51,11 +51,23 @@
   text-align: center;
 }
 
-.like-button {
+.Like-button, .Photo-delete-button {
 	background: none;
 	color: inherit;
 	border: none;
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+}
+
+.card {
+  position: relative;
+}
+
+.card img {
+  display: block;
+}
+
+.card .Photo-delete-button {
+  position: absolute; right:0;
 }

@@ -77,10 +77,10 @@ export function Like(props) {
     <>
       <button
         onClick={onClick}
-        className='like-button'    
+        className='Like-button'    
       >
 
-      { liked ? <RiThumbUpFill /> : <RiThumbUpLine />}
+        { liked ? <RiThumbUpFill /> : <RiThumbUpLine />}
         
       </button>
       {like_count}
