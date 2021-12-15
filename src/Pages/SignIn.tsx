@@ -5,6 +5,11 @@ import { setUser } from '../store/userSlice'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+interface IUser {
+  email: string;
+  password: string;
+}
+
 export function SignIn() {
   const { 
     register, 
@@ -16,11 +21,11 @@ export function SignIn() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [api_errors, setApiErrors] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [api_errors, setApiErrors] = useState<string>('');
 
-  const onSubmit = (event) => {
+  const onSubmit = () => {
     axios
       .post(process.env.REACT_APP_API_URL + '/users/sign_in', {
         user: {

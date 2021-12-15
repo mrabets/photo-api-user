@@ -10,8 +10,8 @@ const Navbar = () => {
   const {isAuth} = useAuth()
 
   const onLogOut = () => {
-    dispatch(removeUser())
-    navigate('/', {remote: true})
+    dispatch(removeUser());
+    navigate('/', {replace: true})
   }
 
   return (

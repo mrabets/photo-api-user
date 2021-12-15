@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
-import {PhotoForm} from './PhotoForm';
-import {Photo} from './Photo';
+import { PhotoForm } from './PhotoForm';
+import { Photo } from './Photo';
 import { useAuth } from '../hooks/use-auth';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {IPhoto} from '../types/data'
+import axios from 'axios';
 
 export function PhotoList() {
   const navigate = useNavigate()
 
-  const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState<IPhoto[]>([]);
   const {isAuth} = useAuth() 
 
   const headers = {
@@ -32,7 +33,7 @@ export function PhotoList() {
     navigate('/', {replace: true})
   }
 
-  function updatePhotoList(photo) {
+  function updatePhotoList(photo: IPhoto) {
     let _photos = photos;
     _photos.unshift(photo);
     setPhotos(_photos);
@@ -40,7 +41,7 @@ export function PhotoList() {
     navigate('/', {replace: true})
   }
 
-  function deletePhoto(photo) {
+  function deletePhoto(photo: IPhoto) {
     axios
       .delete(process.env.REACT_APP_API_URL + `/api/v1/photos/${photo.id}`, 
         { headers: headers }

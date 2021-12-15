@@ -66,6 +66,7 @@
 
 .card img {
   display: block;
+  width: 18rem;
 }
 
 .card .Photo-delete-button {

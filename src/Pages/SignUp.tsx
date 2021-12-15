@@ -21,7 +21,7 @@ export function SignUp() {
   const [password_confirmation, setPasswordConfirmation] = useState('') 
   const [api_errors, setApiErrors] = useState('');
 
-  const onSubmit = (event) => {
+  const onSubmit = () => {
     axios
       .post(process.env.REACT_APP_API_URL + '/users/', {
         user: {

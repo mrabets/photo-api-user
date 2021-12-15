@@ -9,7 +9,7 @@ import {NotFound} from './Pages/NotFound';
 import {Layout} from './Layout/Layout';
 import { useAuth } from './hooks/use-auth';
 
-const App = () => {
+const App: React.FC = () => {
   const {isAuth} = useAuth()
 
   return (

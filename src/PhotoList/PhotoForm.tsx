@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { DirectUpload } from 'activestorage';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
-export function PhotoForm(props) {
+const PhotoForm: React.FC<any> = (props) => {
   const { 
     register, 
     handleSubmit,
@@ -12,10 +11,10 @@ export function PhotoForm(props) {
     mode: "onBlur"
   });
 
-  const [name, setName] = useState('');
-  const [image, setImage] = useState(null);
+  const [name, setName] = useState<string>('');
+  const [image, setImage] = useState<Blob>(new Blob());
 
-  const onSubmit = (event) => {
+  const onSubmit = () => {
     const formData = new FormData()
 
     formData.append('name', name)
@@ -66,7 +65,10 @@ export function PhotoForm(props) {
             className="form-control"
             type="file"
             name="image"
-            onChange={e => setImage(e.target.files[0])}
+            onChange={e => {
+              if (!e.target.files) return;
+              setImage((e.target.files[0]));
+            }}
           /><br />
         </label>
 
@@ -75,3 +77,5 @@ export function PhotoForm(props) {
     </div>
   );
 }
+
+export {PhotoForm}

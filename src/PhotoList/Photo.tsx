@@ -3,7 +3,7 @@ import { TiDelete } from 'react-icons/ti';
 import {Like} from './Like'
 import axios from 'axios';
 
-export function Photo(props) {
+export function Photo(props: any) {
 
   const onClick = () => {
     if (window.confirm('Are you sure?')) {
@@ -12,7 +12,7 @@ export function Photo(props) {
   }
 
   return (
-    <div className="card" width="18rem">
+    <div className="card">
       <button 
         className='Photo-delete-button'
         onClick={onClick}

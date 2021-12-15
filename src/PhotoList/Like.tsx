@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { RiThumbUpLine, RiThumbUpFill } from 'react-icons/ri';
 import axios from 'axios';
 
-
-export function Like(props) {
+export function Like(props: { photo_id: number; }) {
   const [liked, setLiked] = useState(false)
   const [like_count, setLikeCount] = useState(0)
 
@@ -49,7 +48,7 @@ export function Like(props) {
     liked ? onUnlike(headers) : onLike(headers)
   }
 
-  const onLike = (headers) => {
+  const onLike = (headers: { 'Content-Type': string; Authorization: string; }) => {
     axios
     .post(process.env.REACT_APP_API_URL + `/api/v1/photos/${props.photo_id}/likes`, null,  
       { headers: headers }
@@ -61,12 +60,12 @@ export function Like(props) {
     .catch(error => console.log(error.response.data.error))
   }
 
-  const onUnlike = (headers) => {
+  const onUnlike = (headers: { 'Content-Type': string; Authorization: string; }) => {
     axios
     .delete(process.env.REACT_APP_API_URL + `/api/v1/photos/${props.photo_id}/likes`,  
       { headers: headers }
     )
-    .then(response => {
+    .then(() => {
       setLiked(false)
       setLikeCount(like_count - 1)
     })
@@ -75,15 +74,11 @@ export function Like(props) {
 
   return ( 
     <>
-      <button
-        onClick={onClick}
-        className='Like-button'    
-      >
-
-        { liked ? <RiThumbUpFill /> : <RiThumbUpLine />}
-        
-      </button>
-      {like_count}
+    <button onClick={onClick} className='Like-button'>
+      { liked ? <RiThumbUpFill /> : <RiThumbUpLine />}      
+    </button>
+    
+    {like_count}
     </>
   )
 }
