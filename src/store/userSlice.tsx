@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
+import {IUserSliceState} from '../types/data'
 
-const initialState = {
+const initialState: IUserSliceState = {
   id: null,
   email: null,
   token: localStorage.getItem('token') ? localStorage.getItem('token') : null ,
@@ -15,7 +16,7 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.token = action.payload.token;
 
-      localStorage.setItem("token", state.token)
+      localStorage.setItem("token", state.token || '')
     },
     removeUser(state) {
       state.id = null;
