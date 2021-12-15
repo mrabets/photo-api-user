@@ -3,8 +3,11 @@ import {PhotoForm} from './PhotoForm';
 import {Photo} from './Photo';
 import { useAuth } from '../hooks/use-auth';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export function PhotoList() {
+  const navigate = useNavigate()
+
   const [photos, setPhotos] = useState([]);
   const {isAuth} = useAuth() 
 
@@ -15,7 +18,7 @@ export function PhotoList() {
 
   useEffect(() => {
     getPhotos()
-  }, [photos]);
+  }, []);
 
   function getPhotos() {
     axios
@@ -23,14 +26,18 @@ export function PhotoList() {
         headers: headers
       })
       .then(response => response.data)
-      .then(data => {setPhotos(data.reverse())}) 
+      .then(data => {console.log(data); setPhotos(data.reverse())}) 
       .catch(error => console.log(error))
+
+    navigate('/', {replace: true})
   }
 
   function updatePhotoList(photo) {
     let _photos = photos;
     _photos.unshift(photo);
     setPhotos(_photos);
+
+    navigate('/', {replace: true})
   }
 
   function deletePhoto(photo) {
@@ -45,6 +52,8 @@ export function PhotoList() {
     const photoIndex = _photos.indexOf(photo)
     _photos.splice(photoIndex, 1)
     setPhotos(_photos)
+
+    navigate('/', {replace: true})
   }
 
   return (
