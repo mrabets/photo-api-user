@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../store/userSlice'
 import { useNavigate } from 'react-router-dom';
+import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 
-interface IUser {
-  email: string;
-  password: string;
+import { setUser } from '../store/userSlice'
+
+type IError = {
+  response: {
+    data: {
+      error: string
+    }
+  }
 }
 
 export function SignIn() {
@@ -25,69 +30,73 @@ export function SignIn() {
   const [password, setPassword] = useState<string>('');
   const [api_errors, setApiErrors] = useState<string>('');
 
-  const onSubmit = () => {
-    axios
-      .post(process.env.REACT_APP_API_URL + '/users/sign_in', {
-        user: {
-          email,
-          password
-        },
-      })
-      .then(response => response.data)
-      .then(data => {
-        dispatch(setUser({
-          id: data.user.id,
-          email: data.user.email,
-          token: data.token
-        }))
-        navigate('/', {replace: true})
-      })
-      .catch(error => setApiErrors(error.response.data.error))
+  const onSubmit = async () => {
+    try {
+      const response = await axios
+        .post(process.env.REACT_APP_API_URL + '/users/sign_in', {
+          user: {
+            email,
+            password
+          },
+        })
+      
+      const data = response.data
+
+      dispatch(setUser({
+        id: data.user.id,
+        email: data.user.email,
+        token: data.token
+      }))
+      
+      navigate('/', {replace: true})
+    } catch (e: any) {
+      setApiErrors(e.response.data.error)
+    }
   } 
 
   return (
-    <div className="Own-form">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="Error-label">
-          {api_errors}
-        </div>
+    <Form onSubmit={handleSubmit(onSubmit)} className="Own-form">
+      <Form.Group className="Error-label">
+        {api_errors}
+      </Form.Group>
+    
+      <Form.Group className="mb-3">
+        <Form.Label className="form-label">Email</Form.Label>
+        <Form.Control
+          {...register("email", {
+            required: true,
+          })}
+          type="email"
+          name="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          className="form-control"
+        />
+        <Form.Group className="Error-label">
+          {errors?.email?.type === "required" && <p>This field is required</p>}
+        </Form.Group>
+      </Form.Group>
 
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input
-            {...register("email", {
-              required: true,
-            })}
-            type="email"
-            name="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            className="form-control"
-          />
-          <div className="Error-label">
-            {errors?.email?.type === "required" && <p>This field is required</p>}
-          </div>
-        </div>
+      <Form.Group className="mb-3">
+        <Form.Label className="form-label">Password</Form.Label>
+        <Form.Control
+          {...register("password", {
+            required: true,
+          })}
+          type="password"
+          name="password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          className="form-control"
+        />
+        <Form.Group className="Error-label">
+          {errors?.password?.type === "required" && <p>This field is required</p>}
+        </Form.Group>
+      </Form.Group>
 
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input
-            {...register("password", {
-              required: true,
-            })}
-            type="password"
-            name="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            className="form-control"
-          />
-          <div className="Error-label">
-            {errors?.password?.type === "required" && <p>This field is required</p>}
-          </div>
-        </div>
-
-        <input type="submit" className="btn btn-primary" />
-      </form>
-    </div>
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+    </Form>
   );
 }
