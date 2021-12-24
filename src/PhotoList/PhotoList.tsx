@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 import { PhotoForm } from './PhotoForm';
 import { Photo } from './Photo';
 import { useAuth } from '../hooks/use-auth';
-import { useNavigate } from 'react-router-dom';
-import {IPhoto} from '../types/data'
-import axios from 'axios';
+import { IPhoto } from '../types/data'
 
 export function PhotoList() {
   const navigate = useNavigate()
@@ -12,28 +13,36 @@ export function PhotoList() {
   const [photos, setPhotos] = useState<IPhoto[]>([]);
   const {isAuth} = useAuth() 
 
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('token')
-  }
-
   useEffect(() => {
     getPhotos()
   }, []);
 
-  function getPhotos() {
-    axios
-      .get(process.env.REACT_APP_API_URL + '/api/v1/photos', {
-        headers: headers
-      })
-      .then(response => response.data)
-      .then(data => {console.log(data); setPhotos(data.reverse())}) 
-      .catch(error => console.log(error))
-
-    navigate('/', {replace: true})
+  const getHeaders = () => {
+    return { 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
   }
 
-  function updatePhotoList(photo: IPhoto) {
+  const getPhotos = async () => {
+    try {
+      const response = await axios
+        .get(process.env.REACT_APP_API_URL + '/api/v1/photos', {
+          headers: getHeaders()
+        })
+      
+      const data = response.data
+      
+      setPhotos(data.reverse()) 
+  
+      navigate('/', {replace: true})
+
+    } catch(error: any) {
+      console.log(error)
+    } 
+  }
+
+  const updatePhotoList = (photo: IPhoto) => {
     let _photos = photos;
     _photos.unshift(photo);
     setPhotos(_photos);
@@ -41,20 +50,29 @@ export function PhotoList() {
     navigate('/', {replace: true})
   }
 
-  function deletePhoto(photo: IPhoto) {
-    axios
-      .delete(process.env.REACT_APP_API_URL + `/api/v1/photos/${photo.id}`, 
-        { headers: headers }
-      )
-      .then(response => console.log(response))
-      .catch(error => console.log(error.response.data.error))
-
+  const updatePhotoListAfterDelete = (photo: IPhoto) => {
     let _photos = photos;
     const photoIndex = _photos.indexOf(photo)
     _photos.splice(photoIndex, 1)
     setPhotos(_photos)
+  }
 
-    navigate('/', {replace: true})
+  const deletePhoto = async (photo: IPhoto) => {
+    try {
+      const response = await axios
+        .delete(process.env.REACT_APP_API_URL + `/api/v1/photos/${photo.id}`, 
+          { headers: getHeaders() }
+        )
+        
+      console.log(response)
+  
+      updatePhotoListAfterDelete(photo)
+  
+      navigate('/', {replace: true})
+
+    } catch(error: any) {
+      console.log(error.response.data.error)
+    } 
   }
 
   return (

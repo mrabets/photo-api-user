@@ -100,7 +100,7 @@ export function SignUp() {
       </Form.Group>
 
       <Button variant="primary" type="submit">
-          Submit
+        Submit
       </Button>
     </Form>
   );
