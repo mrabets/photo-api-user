@@ -16,10 +16,10 @@ const Navbar = () => {
 
   return (
     <div className="container">
-      <nav className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <nav className="navbar">
         
         <Link to="/" className="App-logo">
-          PHOTO SITE
+          Photo Api
         </Link>
 
         { isAuth ? ( 
@@ -43,8 +43,7 @@ const Navbar = () => {
               </Link>
             </div>
           )
-        }
-        
+        }      
       </nav>
     </div>
   )

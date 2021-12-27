@@ -56,6 +56,7 @@ const PhotoForm: React.FC<any> = (props) => {
           onChange={e => setName(e.target.value)}
         />
       </Form.Label>
+      
       <Form.Group className="Error-label">
           {errors?.name?.type === "required" && <p>This field is required</p>}
       </Form.Group>
@@ -74,7 +75,7 @@ const PhotoForm: React.FC<any> = (props) => {
             setImage((e.target.files[0]));
           }}
         />
-      </Form.Label>
+      </Form.Label><br/><br/>
 
       <Button variant="primary" type="submit">
         Submit

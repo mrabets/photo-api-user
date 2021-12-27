@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { TiDelete } from 'react-icons/ti';
 import {Like} from './Like'
 import axios from 'axios';
+import { useAuth } from '../hooks/use-auth';
 
 export function Photo(props: any) {
+  const {user_id} = useAuth()
 
   const onClick = () => {
     if (window.confirm('Are you sure?')) {
@@ -13,13 +15,18 @@ export function Photo(props: any) {
 
   return (
     <div className="card">
-      <button 
-        className='Photo-delete-button'
-        onClick={onClick}
-      >
-        <TiDelete size={20}/>
-      </button>
-
+      {
+        user_id == props.photo.user_id ? (
+          <button 
+            className='Photo-delete-button'
+            onClick={onClick}
+          >
+            <TiDelete size={20}/>
+          </button>
+        ) : (
+          <div></div>
+        )
+      }
       <img
         className="card-img-top"
         src={`http://localhost:3000/${props.photo.image}`}       

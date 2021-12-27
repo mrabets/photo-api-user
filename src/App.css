@@ -1,11 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1+Code&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Romanesco&display=swap');
 
 * {
   font-family: 'M PLUS 1 Code', sans-serif;
 }
 
+.navbar {
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+
 .App-logo {
-  font-size: 25px;
+  font-family: 'Romanesco', sans-serif;
+  font-size: 55px;
   color:  inherit;
   text-decoration:none;
 }
@@ -13,7 +22,7 @@
 .Own-form {
   margin-left: auto;
   margin-right: auto;
-  width: 18em
+  width: 18em;
 }
 
 .Photo-list {

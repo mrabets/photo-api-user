@@ -34,7 +34,7 @@ export function PhotoList() {
       const data = response.data
       
       setPhotos(data.reverse()) 
-  
+      console.log(data)
       navigate('/', {replace: true})
 
     } catch(error: any) {

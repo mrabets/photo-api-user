@@ -1,13 +1,11 @@
-import { integerPropType } from "@mui/utils";
-
 export interface IUserSliceState {
-  id: number | null;
+  user_id: string | null;
   email: string | null;
   token: string | null; 
 }
 
 export interface IPhoto {
-  id: number;
+  id: string;
   image: string;
   name: string;
 }
