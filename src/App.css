@@ -1,38 +1,83 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1+Code&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Romanesco&display=swap');
+
+* {
+  font-family: 'M PLUS 1 Code', sans-serif;
+}
+
+.navbar {
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+
+.App-logo {
+  font-family: 'Romanesco', sans-serif;
+  font-size: 55px;
+  color:  inherit;
+  text-decoration:none;
+}
+
+.Own-form {
+  margin-left: auto;
+  margin-right: auto;
+  width: 18em;
+}
+
+.Photo-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-column-gap: 0px;
+  grid-row-gap: 4rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  justify-items: center;
+}
+
+.card-img-top {
+  min-width: 190px;
+  max-width: 200px;
+  min-height: 190px;
+  max-height: 200px;
+}
+
+.Error-label {
+  color:darkred;
+  margin-top: 10px;
+  margin-bottom: 2rem;
+}
+
+.card-text {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.card-body {
+  text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Message {
+  text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.Like-button, .Photo-delete-button {
+	background: none;
+	color: inherit;
+	border: none;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 }
 
-.App-link {
-  color: #61dafb;
+.card {
+  position: relative;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.card img {
+  display: block;
+  width: 18rem;
+}
+
+.card .Photo-delete-button {
+  position: absolute; right:0;
 }
