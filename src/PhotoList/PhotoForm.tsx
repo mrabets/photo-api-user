@@ -2,8 +2,11 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { useAuth } from '../hooks/use-auth';
 
-const PhotoForm: React.FC<any> = (props) => {
+export const PhotoForm = (props: any) => {
+  const {isAuth} = useAuth();
+
   const { 
     register, 
     handleSubmit,
@@ -42,46 +45,53 @@ const PhotoForm: React.FC<any> = (props) => {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} className="Own-form">
-      <Form.Label className="form-label">
-        Name
-        <Form.Control
-          {...register("name", {
-            required: true,
-          })}
-          id="name_input"
-          className="form-control"
-          type="text"
-          name="name"
-          onChange={e => setName(e.target.value)}
-        />
-      </Form.Label>
-      
-      <Form.Group className="Error-label">
-          {errors?.name?.type === "required" && <p>This field is required</p>}
-      </Form.Group>
+    <div>
+      {
+        isAuth ? (
+          <Form onSubmit={handleSubmit(onSubmit)} className="Own-form">
+          <Form.Label className="form-label">
+            Name
+            <Form.Control
+              {...register("name", {
+                required: true,
+              })}
+              id="name_input"
+              className="form-control"
+              type="text"
+              name="name"
+              onChange={e => setName(e.target.value)}
+            />
+          </Form.Label>
+          
+          <Form.Group className="Error-label">
+              {errors?.name?.type === "required" && <p>This field is required</p>}
+          </Form.Group>
 
-      <Form.Label className="form-label">
-        <Form.Control
-          {...register("image", {
-            required: true,
-          })}
-          id="image_input"
-          className="form-control"
-          type="file"
-          name="image"
-          onChange={(e: any) => {
-            if (!e.target.files) return;
-            setImage((e.target.files[0]));
-          }}
-        />
-      </Form.Label><br/><br/>
+          <Form.Label className="form-label">
+            <Form.Control
+              {...register("image", {
+                required: true,
+              })}
+              id="image_input"
+              className="form-control"
+              type="file"
+              name="image"
+              onChange={(e: any) => {
+                if (!e.target.files) return;
+                setImage((e.target.files[0]));
+              }}
+            />
+          </Form.Label><br/><br/>
 
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </Form>
+        ) : (
+          <>
+          </>
+        )
+      }
+    </div>
   );
 }
-
-export {PhotoForm}

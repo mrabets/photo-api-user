@@ -34,7 +34,7 @@ export function Photo(props: any) {
 
       <div className="card-body">
         <p className="card-text">{props.photo.name}</p>
-        <Like photo_id={props.photo.id}/>
+        <Like photo={props.photo}/>
       </div>
     </div>
   );

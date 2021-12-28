@@ -2,18 +2,18 @@ import { useState, useEffect } from 'react';
 import { RiThumbUpLine, RiThumbUpFill } from 'react-icons/ri';
 import axios from 'axios';
 
-export function Like(props: { photo_id: number; }) {
+export function Like(props: any) {
   const [liked, setLiked] = useState(false)
-  const [like_count, setLikeCount] = useState(0)
+  const [like_count, setLikeCount] = useState(props.photo.likes_count)
 
   useEffect(() => {
     getLike()
-    getLikeCount()
   }, []);
 
   function getLike() {
+    console.log(props)
     axios
-      .get(process.env.REACT_APP_API_URL + `/api/v1/photos/${props.photo_id}/like_status`, {
+      .get(process.env.REACT_APP_API_URL + `/api/v1/photos/${props.photo.id}/like_status`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -21,19 +21,6 @@ export function Like(props: { photo_id: number; }) {
       })
       .then(response => response.data)
       .then(data => {setLiked(data.status)}) 
-      .catch(error => console.log(error.response))
-  }
-
-  function getLikeCount() {
-    axios
-      .get(process.env.REACT_APP_API_URL + `/api/v1/photos/${props.photo_id}/like_count`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-      })
-      .then(response => response.data)
-      .then(data => {setLikeCount(data.like_count)}) 
       .catch(error => console.log(error.response))
   }
 
@@ -50,7 +37,7 @@ export function Like(props: { photo_id: number; }) {
 
   const onLike = (headers: { 'Content-Type': string; Authorization: string; }) => {
     axios
-    .post(process.env.REACT_APP_API_URL + `/api/v1/photos/${props.photo_id}/likes`, null,  
+    .post(process.env.REACT_APP_API_URL + `/api/v1/photos/${props.photo.id}/likes`, null,  
       { headers: headers }
     )
     .then(response => {
@@ -62,7 +49,7 @@ export function Like(props: { photo_id: number; }) {
 
   const onUnlike = (headers: { 'Content-Type': string; Authorization: string; }) => {
     axios
-    .delete(process.env.REACT_APP_API_URL + `/api/v1/photos/${props.photo_id}/likes`,  
+    .delete(process.env.REACT_APP_API_URL + `/api/v1/photos/${props.photo.id}/likes`,  
       { headers: headers }
     )
     .then(() => {
