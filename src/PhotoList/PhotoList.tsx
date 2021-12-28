@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { PhotoForm } from './PhotoForm';
@@ -11,7 +11,8 @@ export function PhotoList() {
   const navigate = useNavigate()
 
   const [photos, setPhotos] = useState<IPhoto[]>([]);
-  const {isAuth} = useAuth() 
+  let {user_id} = useAuth();  
+  const params = useParams();
 
   useEffect(() => {
     getPhotos()
@@ -28,14 +29,15 @@ export function PhotoList() {
     try {
       const response = await axios
         .get(process.env.REACT_APP_API_URL + '/api/v1/photos', {
+          params: {
+            user_id: params.user_id ? params.user_id : user_id
+          },
           headers: getHeaders()
         })
       
       const data = response.data
       
-      setPhotos(data.reverse()) 
-      console.log(data)
-      navigate('/', {replace: true})
+      setPhotos(data.reverse())
 
     } catch(error: any) {
       console.log(error)
@@ -77,27 +79,19 @@ export function PhotoList() {
 
   return (
     <div>
-      {
-        isAuth ? (
-          <>
-          <div>
-            <PhotoForm updatePhotoList={updatePhotoList} />
-          </div>
+      <div>
+        <PhotoForm updatePhotoList={updatePhotoList} />
+      </div>
 
-          <div className="Photo-list">
-            {photos.map((photo) => (
-              <Photo 
-                key={photo.id}
-                photo={photo}
-                deletePhoto={deletePhoto}
-              />
-            ))}
-          </div>
-          </>
-        ) : (
-          <h2 className="Message">Please, log in!</h2>
-        )
-      }   
+      <div className="Photo-list">
+        {photos.map((photo) => (
+          <Photo 
+            key={photo.id}
+            photo={photo}
+            deletePhoto={deletePhoto}
+          />
+        ))}
+      </div>
     </div>
   );
 }
