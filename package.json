@@ -2,6 +2,7 @@
   "name": "photo_api_user",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mrabets.github.io/photo-frontend",
   "dependencies": {
     "@mui/material": "^5.2.0",
     "@reduxjs/toolkit": "^1.6.2",
@@ -26,7 +27,8 @@
     "start": "PORT=4000 react-scripts start",
     "build": "tsc",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && gh-pages -d build"
   },
   "browserslist": {
     "production": [
