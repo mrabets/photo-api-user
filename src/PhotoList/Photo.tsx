@@ -29,7 +29,7 @@ export function Photo(props: any) {
       }
       <img
         className="card-img-top"
-        src={`http://localhost:3000/${props.photo.image}`}       
+        src={process.env.REACT_APP_API_URL + `/${props.photo.image}`}       
       />
 
       <div className="card-body">
